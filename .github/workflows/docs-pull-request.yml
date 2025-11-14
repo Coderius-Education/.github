@@ -1,18 +1,24 @@
-name: Check global DOCS pull requests
+name: Reusable PR Check
 on:
-    pull_request:
-        branches: [main, master]
+    workflow_call:
+        inputs:
+            node-version:
+                description: 'Node.js version'
+                required: false
+                type: string
+                default: '22.x'
+
 jobs:
     test:
         runs-on: ubuntu-latest
-        # Only run on repos ending with -docs
-        if: endsWith(github.repository, '-docs')
         steps:
             - uses: actions/checkout@v4
+            
             - uses: actions/setup-node@v4
               with:
-                  node-version: "22.x"
+                  node-version: ${{ inputs.node-version }}
                   registry-url: "https://registry.npmjs.org"
+                  
             - name: Install node modules
               run: npm install
 
@@ -20,5 +26,4 @@ jobs:
               run: npm run test
 
             - name: Build application
-              run: |
-                  npm run build
+              run: npm run build
