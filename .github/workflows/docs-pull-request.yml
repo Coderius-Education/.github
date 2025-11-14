@@ -1,4 +1,4 @@
-name: Check pull requests
+name: Check global DOCS pull requests
 on:
     pull_request:
         branches: [main, master]
