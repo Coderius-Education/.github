@@ -1,0 +1,16 @@
+name: PR Check Router
+on:
+    workflow_call:
+        inputs:
+            node-version:
+                description: 'Node.js version'
+                required: false
+                type: string
+                default: '22.x'
+
+jobs:
+    route-docs:
+        if: endsWith(github.repository, '-docs')
+        uses: Coderius-Education/.github/.github/workflows/docs-pull-request.yml@main
+        with:
+            node-version: ${{ inputs.node-version }}
